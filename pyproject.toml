@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysungrow"
-version = "0.1.0"
+version = "1.0.0"
 description = "Read and manipulate Sungrow inverters"
 authors = ["Jan Dalheimer <jan@dalheimer.de>"]
 license = "MIT"
