@@ -44,3 +44,9 @@ repos:
     rev: v0.991
     hooks:
       - id: mypy
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.1.1
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, ci, chore, docs]
