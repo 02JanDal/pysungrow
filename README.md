@@ -1,5 +1,11 @@
 # pysungrow - Python interface to Sungrow inverters
 
+![PyPI](https://img.shields.io/pypi/v/pysungrow)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pysungrow)
+![PyPI - Status](https://img.shields.io/pypi/status/pysungrow)
+![GitHub](https://img.shields.io/github/license/02jandal/pysungrow)
+[![CI](https://github.com/02JanDal/pysungrow/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/02JanDal/pysungrow/actions/workflows/ci.yaml)
+
 This Python package provides abstractions over the Modbus protocol used by inverters of the brand Sungrow.
 
 ## Features
