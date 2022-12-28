@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysungrow"
-version = "0.1.0"
+version = "0.0.0"
 description = "Read and manipulate Sungrow inverters"
 authors = ["Jan Dalheimer <jan@dalheimer.de>"]
 license = "MIT"
@@ -111,3 +111,13 @@ forced_separate = [
     "tests",
 ]
 combine_as_imports = true
+
+[tool.semantic_release]
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
+branch = "main"
+upload_to_repository = true
+upload_to_release = true
+build_command = "poetry build"
+prerelease_tag = "pre"

@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -51,6 +52,7 @@ jobs:
         poetry run pytest -v
 
   lint_typecheck:
+    name: Lint & typecheck
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
