@@ -7,13 +7,15 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/02JanDal/pysungrow"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10"
+    "Programming Language :: Python :: 3.10",
+    "Framework :: AsyncIO"
 ]
 
 [tool.poetry.dependencies]
