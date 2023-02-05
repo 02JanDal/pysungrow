@@ -2,6 +2,8 @@
 
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
 
+from pysungrow.identify import SungrowIdentificationResult
+
 if TYPE_CHECKING:
     try:
         from pymodbus.client import ModbusBaseClient
@@ -16,7 +18,6 @@ if TYPE_CHECKING:
 from pysungrow.definitions.device import SungrowDevice
 from pysungrow.definitions.variable import VariableDefinition, VariableType
 from pysungrow.definitions.variables import variables
-from pysungrow.definitions.variables.device import OutputType
 from pysungrow.lib.read_variables import read_variables
 from pysungrow.lib.write_variable import write_variable
 
@@ -27,21 +28,20 @@ class SungrowClient:
     def __init__(
         self,
         client: "ModbusBaseClient",
-        device: SungrowDevice,
-        output_type: OutputType,
+        identity: SungrowIdentificationResult,
         slave: int = 1,
     ):
         """
         Construct a client for communicating with Sungrow inverters.
 
         :param client: The Modbus client over which communication takes place
-        :param device: The Sungrow device model which will be communicated with, controls the available variables
-        :param output_type: The output type configured for the inverter, controls some available variables
+        :param identity: Information specifying how we can talk to the device, like it's model
         :param slave: The unit/slave to connect to
         """
         self._client = client
-        self._device = device
-        self._output_type = output_type
+        self._device = identity.device
+        self._output_type = identity.output_type
+        self._excluded_variables = identity.excluded_variables
         self._slave = slave
         self._data: Dict[str, Any] = {}
 
@@ -62,6 +62,7 @@ class SungrowClient:
             for r in variables
             if self._device in r.devices
             and (r.if_output_type is None or self._output_type in r.if_output_type)
+            and r.key not in self._excluded_variables
         )
 
     @property

@@ -9,7 +9,7 @@ from pysungrow.definitions.device import SungrowDevice
 
 async def do_identify(host, port, slave):
     client = AsyncModbusTcpClient(host, port)
-    serial_number, device, output_type = await identify(client, slave)
+    serial_number, device, output_type, _ = await identify(client, slave)
     print("Serial number:", serial_number)
     print("Device:", device.name)
     print("Output type:", output_type.name)
@@ -17,8 +17,8 @@ async def do_identify(host, port, slave):
 
 async def do_get(host, port, slave, keys):
     client = AsyncModbusTcpClient(host, port)
-    _, device, output_type = await identify(client, slave)
-    sungrow = SungrowClient(client, device, output_type, slave)
+    identity = await identify(client, slave)
+    sungrow = SungrowClient(client, identity, slave)
     await sungrow.refresh()
     for key in sungrow.keys:
         if keys is not None and key not in keys:
@@ -33,8 +33,8 @@ async def do_get(host, port, slave, keys):
 
 async def do_set(host, port, slave, key, value):
     client = AsyncModbusTcpClient(host, port)
-    _, device, output_type = await identify(client, slave)
-    sungrow = SungrowClient(client, device, output_type, slave)
+    identity = await identify(client, slave)
+    sungrow = SungrowClient(client, identity, slave)
 
     variable = sungrow.variable(key)
     if variable.type in (int, float):
