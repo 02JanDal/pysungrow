@@ -1,15 +1,15 @@
 from unittest.mock import AsyncMock
 
-from pymodbus.client import AsyncModbusTcpClient
 import pytest
 
+from pysungrow.compat import AsyncModbusTcpClient
 from pysungrow.definitions.variable import RawType, VariableDefinition, VariableType
 from pysungrow.lib.write_variable import write_variable
 
 
 @pytest.mark.asyncio
 async def test_write_encoded_int():
-    client = AsyncModbusTcpClient("127.0.0.1")
+    client = AsyncModbusTcpClient("127.0.0.1", 502)
     client.write_registers = AsyncMock()
     await write_variable(
         client,

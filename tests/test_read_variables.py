@@ -1,19 +1,19 @@
 from unittest.mock import AsyncMock
 
-from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.register_read_message import (
     ReadHoldingRegistersResponse,
     ReadInputRegistersResponse,
 )
 import pytest
 
+from pysungrow.compat import AsyncModbusTcpClient
 from pysungrow.definitions.variable import RawType, VariableDefinition, VariableType
 from pysungrow.lib.read_variables import read_variables
 
 
 @pytest.mark.asyncio
 async def test_read_one():
-    client = AsyncModbusTcpClient("127.0.0.1")
+    client = AsyncModbusTcpClient("127.0.0.1", 502)
     client.read_input_registers = AsyncMock(
         return_value=ReadInputRegistersResponse([0x1234])
     )
@@ -32,7 +32,7 @@ async def test_read_one():
 
 @pytest.mark.asyncio
 async def test_read_multiple():
-    client = AsyncModbusTcpClient("127.0.0.1")
+    client = AsyncModbusTcpClient("127.0.0.1", 502)
     client.read_input_registers = AsyncMock(
         return_value=ReadInputRegistersResponse([0x1234, 0x0000, 0x5678])
     )
@@ -54,7 +54,7 @@ async def test_read_multiple():
 
 @pytest.mark.asyncio
 async def test_read_input_and_holding():
-    client = AsyncModbusTcpClient("127.0.0.1")
+    client = AsyncModbusTcpClient("127.0.0.1", 502)
     client.read_input_registers = AsyncMock(
         return_value=ReadInputRegistersResponse([0x1234])
     )
