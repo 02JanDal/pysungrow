@@ -53,6 +53,7 @@ system_state_variable_13000 = VariableDefinition(
     13000,
     RawType.U16,
     SystemState,
+    transform=lambda v: None if v in (0x1200,) else SystemState(v),
     devices=all_hybrid,
 )
 running_state_variable_13001 = VariableDefinition(
@@ -273,7 +274,7 @@ grid_state_variable_13030 = VariableDefinition(
     13030,
     RawType.U16,
     GridState,
-    transform=lambda raw: None if raw == 0xFFFF else GridState(raw),
+    transform=lambda raw: None if raw in (0, 0xFFFF) else GridState(raw),
     devices=all_hybrid,
 )
 
