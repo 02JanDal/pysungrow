@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pymodbus = "^3.0.2"
+pymodbus = ">=2.5.3"  # would have preferred "~2.5.3, ~3.0.0" but pip install -e didn't like that
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"

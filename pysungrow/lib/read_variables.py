@@ -1,8 +1,15 @@
 """Functions for reading from Modbus clients."""
 
-from typing import Any, Dict, List
+from typing import TYPE_CHECKING, Any, Dict, List
 
-from pymodbus.client import ModbusBaseClient
+if TYPE_CHECKING:
+    try:
+        from pymodbus.client.base import ModbusBaseClient
+    except ImportError:
+        # support for pymodbus v2.5.3
+        from pymodbus.client.asynchronous.mixins import (
+            BaseAsyncModbusClient as ModbusBaseClient,
+        )
 
 from pysungrow.definitions.variable import VariableDefinition, VariableType
 from pysungrow.lib.decode import decode_variables
@@ -10,7 +17,7 @@ from pysungrow.lib.group_variables_by_proximity import group_variables_by_proxim
 
 
 async def read_variables(
-    client: ModbusBaseClient, variables: List[VariableDefinition], slave: int
+    client: "ModbusBaseClient", variables: List[VariableDefinition], slave: int
 ) -> Dict[str, Any]:
     """
     Read some registers from a client.

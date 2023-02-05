@@ -1,8 +1,15 @@
 """Functions for writing to Modbus clients."""
 
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
-from pymodbus.client import ModbusBaseClient
+if TYPE_CHECKING:
+    try:
+        from pymodbus.client.base import ModbusBaseClient
+    except ImportError:
+        # support for pymodbus v2.5.3
+        from pymodbus.client.asynchronous.mixins import (
+            BaseAsyncModbusClient as ModbusBaseClient,
+        )
 
 from pysungrow.definitions.variable import VariableDefinition, VariableType
 from pysungrow.lib.encode import encode_registers_for_variable
@@ -11,7 +18,7 @@ T = TypeVar("T")
 
 
 async def write_variable(
-    client: ModbusBaseClient, data: T, variable: VariableDefinition[T], slave: int
+    client: "ModbusBaseClient", data: T, variable: VariableDefinition[T], slave: int
 ):
     """
     Write some data to a client.

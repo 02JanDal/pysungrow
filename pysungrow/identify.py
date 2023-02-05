@@ -1,9 +1,18 @@
 """Identifying the type/model of inverter."""
+from typing import TYPE_CHECKING, Tuple, Union
 
-from typing import Tuple
-
-from pymodbus.client import ModbusBaseClient
 from pymodbus.exceptions import ModbusException
+
+if TYPE_CHECKING:
+    try:
+        from pymodbus.client.base import ModbusBaseClient
+    except ImportError:
+        # support for pymodbus v2.5.3
+        from pymodbus.client.asynchronous.mixins import BaseAsyncModbusClient
+
+        from pysungrow.compat import AsyncModbusTcpClient
+
+        ModbusBaseClient = Union[BaseAsyncModbusClient, AsyncModbusTcpClient]
 
 from pysungrow.definitions.device import SungrowDevice
 from pysungrow.definitions.variables.device import (

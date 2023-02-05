@@ -2,9 +2,8 @@ from argparse import ArgumentParser
 import asyncio
 from enum import Enum
 
-from pymodbus.client import AsyncModbusTcpClient
-
 from pysungrow import SungrowClient, identify
+from pysungrow.compat import AsyncModbusTcpClient
 from pysungrow.definitions.device import SungrowDevice
 
 

@@ -1,8 +1,17 @@
 """Main access point for connecting to inverters."""
 
-from typing import Any, Dict, List, Optional, Sequence
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
 
-from pymodbus.client.base import ModbusBaseClient
+if TYPE_CHECKING:
+    try:
+        from pymodbus.client import ModbusBaseClient
+    except (ImportError, ModuleNotFoundError):
+        # support for pymodbus v2.5.3
+        from pymodbus.client.asynchronous.mixins import BaseAsyncModbusClient
+
+        from pysungrow.compat import AsyncModbusTcpClient
+
+        ModbusBaseClient = Union[BaseAsyncModbusClient, AsyncModbusTcpClient]
 
 from pysungrow.definitions.device import SungrowDevice
 from pysungrow.definitions.variable import VariableDefinition, VariableType
@@ -17,7 +26,7 @@ class SungrowClient:
 
     def __init__(
         self,
-        client: ModbusBaseClient,
+        client: "ModbusBaseClient",
         device: SungrowDevice,
         output_type: OutputType,
         slave: int = 1,
@@ -94,7 +103,7 @@ class SungrowClient:
             await conn.close()
 
     async def _refresh_impl(
-        self, conn: ModbusBaseClient, keys: Optional[Sequence[str]]
+        self, conn: "ModbusBaseClient", keys: Optional[Sequence[str]]
     ):
         self._data.update(
             await read_variables(
