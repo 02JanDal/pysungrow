@@ -61,6 +61,11 @@ sh8_0rt = SungrowDevice(
     "SH8.0RT",
     SungrowDeviceType.HYBRID,
 )
+sh8_0rt_20 = SungrowDevice(
+    0xE12,
+    "SH8.0RT-20",
+    SungrowDeviceType.HYBRID,
+)
 sh6_0rt = SungrowDevice(
     0xE01,
     "SH6.0RT",
@@ -86,6 +91,7 @@ all_hybrid = {
     sh6_0rs,
     sh10rt,
     sh8_0rt,
+    sh8_0rt_20
     sh6_0rt,
     sh5_0rt,
 }
